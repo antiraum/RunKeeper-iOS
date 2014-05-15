@@ -127,6 +127,11 @@ NSString *const kRunKeeperNewPointNotification = @"RunKeeperNewPointNotification
     connected = NO;
 }
 
+- (NSString *)accessToken
+{
+    return self.oauthClient.accessToken.accessToken;
+}
+
 - (void)tryToAuthorize
 {
     NSString *oauth_path = [NSString stringWithFormat:@"rk%@://oauth2", self.clientID];
@@ -516,8 +521,10 @@ NSString *const kRunKeeperNewPointNotification = @"RunKeeperNewPointNotification
     }
 }
 
-- (NXOAuth2Client*)oauthClient {
-    if (oauthClient != nil) {
+- (NXOAuth2Client*)oauthClient
+{
+    if (oauthClient != nil)
+    {
         return oauthClient;
     }
     

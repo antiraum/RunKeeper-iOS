@@ -98,6 +98,9 @@ extern NSString *const kRunKeeperNewPointNotification;
  are not actual network calls being made */
 - (void)disconnect;
 
+
+- (NSString *)accessToken;
+
 /** Returns the proper string for API calls from the given acitivity type */
 + (NSString*)activityString:(RunKeeperActivityType)activity;
 
