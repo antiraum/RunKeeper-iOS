@@ -392,7 +392,7 @@ NSString *const kRunKeeperNewPointNotification = @"RunKeeperNewPointNotification
     item.durationInSeconds = [itemDict objectForKey:@"duration"];
     item.source = [itemDict objectForKey:@"source"];
     item.entryMode = [itemDict objectForKey:@"entry_mode"];
-    item.hasPath = [[itemDict objectForKey:@"has_path"] boolValue];
+    item.hasPath = [[itemDict objectForKey:@"has_path"] boolValue] || ([itemDict objectForKey:@"path"] != nil);
     item.uri = [itemDict objectForKey:@"uri"];
 }
 
@@ -414,8 +414,21 @@ NSString *const kRunKeeperNewPointNotification = @"RunKeeperNewPointNotification
 
 - (void)fillFitnessActivity:(RunKeeperFitnessActivity*)item fromDetailedDict:(NSDictionary*)itemDict
 {
-    item.path = [itemDict objectForKey:@"path"];
     [self fillFitnessActivity:item fromSummaryDict: itemDict];
+
+    if (item.hasPath)
+    {
+        NSDate *startTime = item.startTime;
+        NSArray *pathDict = [itemDict objectForKey:@"path"];
+        NSMutableArray *path = [NSMutableArray new];
+        for (NSDictionary *pointDict in pathDict)
+        {
+            [path addObject:[[RunKeeperPathPoint alloc] initInPathWithJSONDict:pointDict forPathStartingAt:startTime]];
+        }
+        item.path = path;
+    }
+
+    // TODO: other details (only path and start time are important at the moment)
 }
 
 - (void)loadNextPage:(NSString*)uri

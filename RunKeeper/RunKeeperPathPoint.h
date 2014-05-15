@@ -26,6 +26,8 @@ typedef enum {
 @property (nonatomic, assign) RunKeeperPathPointType pointType;
 
 - (id)initWithLocation:(CLLocation*)loc ofType:(RunKeeperPathPointType)t;
+- (id)initInPathWithJSONDict:(NSDictionary *)dict forPathStartingAt:(NSDate *)start;
 - (id)proxyForJson;
+
 @end
 

@@ -24,6 +24,30 @@
     return self;
 }
 
+- (id)initInPathWithJSONDict:(NSDictionary *)dict forPathStartingAt:(NSDate *)start
+{
+    if (!(self = [super init]))
+    {
+        return nil;
+    }
+
+    self.pointType = [self pointTypeForTypeString:[dict objectForKey:@"type"]];
+
+    NSTimeInterval timeStampFromDict = [[dict objectForKey:@"timestamp"] doubleValue];
+    self.timeStamp = timeStampFromDict;
+
+    NSDate *timeFromDict = [NSDate dateWithTimeInterval:timeStampFromDict sinceDate:start];
+    self.time = timeFromDict;
+
+    CLLocationDegrees latitude = [[dict objectForKey:@"latitude"] doubleValue];
+    CLLocationDegrees longitude = [[dict objectForKey:@"longitude"] doubleValue];
+    CLLocationDistance altitude =  [[dict objectForKey:@"altitude"] doubleValue];
+
+    self.location = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(latitude, longitude) altitude:altitude horizontalAccuracy:0.0 verticalAccuracy:0.0 timestamp:timeFromDict];
+
+    return self;
+}
+
 - (NSString*)typeStringForPointType
 {
     // "start", "end", "gps", "pause", "resume", "manual"
@@ -37,6 +61,36 @@
     }
     return nil;
 }
+
+- (RunKeeperPathPointType)pointTypeForTypeString:(NSString *)string
+{
+    if ([string isEqualToString:@"pause"])
+    {
+        return kRKPausePoint;
+    }
+    else if ([string isEqualToString:@"end"])
+    {
+        return kRKEndPoint;
+    }
+    else if ([string isEqualToString:@"start"])
+    {
+        return kRKStartPoint;
+    }
+    else if ([string isEqualToString:@"resume"])
+    {
+        return kRKResumePoint;
+    }
+    else if ([string isEqualToString:@"gps"])
+    {
+        return kRKGPSPoint;
+    }
+    else if ([string isEqualToString:@"manual"])
+    {
+        return kRKManualPoint;
+    }
+    return nil;
+}
+
 - (id)proxyForJson {
     //NSLog(@"proxyForJSON: %g %g %g %g", self.timeStamp, self.location.altitude, self.location.coordinate.latitude,
     //      self.location.coordinate.longitude);

@@ -86,7 +86,7 @@
 #pragma mark - Detailed information (not in summary)
 /*********************************************************************************/
 
-// The path for this activity
+// RunKeeperPathPoint sequence
 @property (nonatomic, strong) NSArray* path;
 
 @end
