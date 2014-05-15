@@ -487,8 +487,8 @@ NSString *const kRunKeeperNewPointNotification = @"RunKeeperNewPointNotification
     [self.httpClient setDefaultHeader:@"Authorization" value:[NSString stringWithFormat:@"Bearer %@", oauthClient.accessToken.accessToken]];
     connected = YES;
     [self getBasePaths];
-    if (delegate && [delegate respondsToSelector:@selector(connected)]) {
-        [delegate connected];
+    if (delegate && [delegate respondsToSelector:@selector(connectedWithAccessToken:)]) {
+        [delegate connectedWithAccessToken:oauthClient.accessToken.accessToken];
     }
     
 }

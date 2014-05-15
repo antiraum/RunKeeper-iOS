@@ -42,7 +42,7 @@ typedef enum {
 
 @optional
 // Connected is called when an existing auth token is found
-- (void)connected;
+- (void)connectedWithAccessToken:(NSString*)accessToken;
 
 // Called when the request to connect to runkeeper failed
 - (void)connectionFailed:(NSError*)err;
@@ -146,7 +146,6 @@ the success block */
 - (void)getFitnessActivity:(NSString*)uri
                    success:(RIFitnessActivityCompletionBlock)success
                     failed:(RIBasicFailedBlock)failed;
-
 
 @end
 
