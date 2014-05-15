@@ -82,4 +82,11 @@
 // The URL of the user’s public, human-readable page for this activity
 @property (nonatomic, strong) NSString* publicURI;
 
+#/*********************************************************************************/
+#pragma mark - Detailed information (not in summary)
+/*********************************************************************************/
+
+// The path for this activity
+@property (nonatomic, strong) NSArray* path;
+
 @end

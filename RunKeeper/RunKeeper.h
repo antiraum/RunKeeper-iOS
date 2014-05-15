@@ -141,6 +141,13 @@ the success block */
                           success:(RIFitnessActivityCompletionBlock)success
                            failed:(RIBasicFailedBlock)failed;
 
+/** Retrieves the detailed description of a single fitness activity URI and returns the populated activity object in
+ the success block */
+- (void)getFitnessActivity:(NSString*)uri
+                   success:(RIFitnessActivityCompletionBlock)success
+                    failed:(RIBasicFailedBlock)failed;
+
+
 @end
 
 

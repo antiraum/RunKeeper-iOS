@@ -412,6 +412,12 @@ NSString *const kRunKeeperNewPointNotification = @"RunKeeperNewPointNotification
     item.publicURI = [itemDict objectForKey:@"activity"];
 }
 
+- (void)fillFitnessActivity:(RunKeeperFitnessActivity*)item fromDetailedDict:(NSDictionary*)itemDict
+{
+    item.path = [itemDict objectForKey:@"path"];
+    [self fillFitnessActivity:item fromSummaryDict: itemDict];
+}
+
 - (void)loadNextPage:(NSString*)uri
           parameters:(NSDictionary*)dict
             progress:(RIPaginatorCompletionBlock)progress
@@ -485,6 +491,30 @@ NSString *const kRunKeeperNewPointNotification = @"RunKeeperNewPointNotification
     }];
     [self.httpClient enqueueHTTPRequestOperation:operation];
 }
+
+
+- (void)getFitnessActivity:(NSString*)uri
+                   success:(RIFitnessActivityCompletionBlock)success
+                    failed:(RIBasicFailedBlock)failed
+{
+    NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"GET" path:uri parameters:nil];
+    [request setValue:@"application/vnd.com.runkeeper.FitnessActivity+json" forHTTPHeaderField:@"Accept"];
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+                                                                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
+                                         {
+                                             RunKeeperFitnessActivity* item = [[RunKeeperFitnessActivity alloc] init];
+                                             [self fillFitnessActivity:item fromDetailedDict:JSON];
+                                             if ( success ) {
+                                                 success(item);
+                                             }
+                                         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+                                             if ( failed ) {
+                                                 failed(error);
+                                             }
+                                         }];
+    [self.httpClient enqueueHTTPRequestOperation:operation];
+}
+
 
 #pragma mark NXOAuth2ClientDelegate
 
