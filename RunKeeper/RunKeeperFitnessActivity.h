@@ -13,6 +13,10 @@
     Depending on the API call and expected content type, only basic data, advanced or all fields are filled. */
 @interface RunKeeperFitnessActivity : NSObject
 
+- (id)initFromFeedDict:(NSDictionary*)itemDict;
+- (id)initFromSummaryDict:(NSDictionary*)itemDict;
+- (id)initFromDetailedDict:(NSDictionary*)itemDict;
+
 #/*********************************************************************************/
 #pragma mark - Base information (included in feed)
 /*********************************************************************************/
