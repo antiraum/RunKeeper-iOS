@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "RunKeeper-iOS"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "An iOS RunKeeper API module."
   s.description  = <<-DESC
                     RunKeeper-iOS provides an Objective C wrapper class for accessing the [RunKeeper Health Graph API](http://developer.runkeeper.com/healthgraph) from iOS 4.0 or newer.
