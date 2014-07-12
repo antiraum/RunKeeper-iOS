@@ -483,6 +483,22 @@ NSString *const kRunKeeperNewPointNotification = @"RunKeeperNewPointNotification
     [self.httpClient enqueueHTTPRequestOperation:operation];
 }
 
+- (void)deleteFitnessActivity:(NSString*)uri
+                      success:(RIBasicCompletionBlock)success
+                       failed:(RIBasicFailedBlock)failed
+{
+    NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"DELETE" path:uri parameters:nil];
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        if (success) {
+            success();
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        if (failed) {
+            failed(error);
+        }
+    }];
+    [self.httpClient enqueueHTTPRequestOperation:operation];
+}
 
 #pragma mark NXOAuth2ClientDelegate
 

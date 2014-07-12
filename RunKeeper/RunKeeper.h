@@ -150,6 +150,10 @@ the success block */
                    success:(RIFitnessActivityCompletionBlock)success
                     failed:(RIBasicFailedBlock)failed;
 
+- (void)deleteFitnessActivity:(NSString*)uri
+                      success:(RIBasicCompletionBlock)success
+                       failed:(RIBasicFailedBlock)failed;
+
 @end
 
 
